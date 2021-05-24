@@ -12,7 +12,7 @@ protected:
   TTextNode* next; 
   TTextNode* down; 
   char c; 
-  int level; //Уровень. 0 - текст, 1 - строка, 2 - слово, 3 - буква
+  int level; //0 - текст, 1 - строка, 2 - слово, 3 - буква
 
 public:
   TTextNode(int _l = 3, char _c = 0);
@@ -138,9 +138,7 @@ TTextNode::TTextNode(const TTextNode& _node)
   level = _node.level;
 }
 
-TTextNode::~TTextNode()
-{
-}
+TTextNode::~TTextNode(){}
 
 TTextNode* TTextNode::GetNext()
 {
@@ -182,13 +180,13 @@ void TTextNode::SetLevel(int _l)
   if (_l >= 1 && _l <= 3)
     level = _l;
   else
-    throw logic_error("Error");
+     throw "Error";
 }
 
 void TTextNode::InitMem(int _size)
 {
   if (_size <= 0)
-    throw logic_error("Error");
+     throw "Error";
 
   if ((firstFree == nullptr) && (textNodes == nullptr))
   {
@@ -196,12 +194,11 @@ void TTextNode::InitMem(int _size)
     firstFree = textNodes;
   }
   else if ((firstFree != nullptr) && (textNodes == nullptr))
-    throw logic_error("Error");
+     throw "Error";
 
   else
     textNodes = new TTextNode[_size * 2];
   firstFree = textNodes;
-
 }
 
 void TTextNode::FreeMem() //Освобождение памяти
@@ -222,7 +219,6 @@ void* TTextNode::operator new(size_t size)
 
   TTextNode* node = firstFree;
   firstFree = firstFree->next;
-
   node->next = nullptr;
 
   return node;
@@ -233,7 +229,7 @@ void TTextNode::operator delete(void* p)
   TTextNode* node = (TTextNode*)p;
 
   if ((firstFree == nullptr) && (textNodes == nullptr))
-    throw logic_error("Error");
+     throw "Error";
 
   node->next = nullptr;
   node->down = nullptr;

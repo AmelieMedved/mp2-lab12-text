@@ -5,7 +5,8 @@
 
 class TTextIter;
 
-class TText {
+class TText 
+{
 protected:
     TTextNode* root;
 public:
@@ -27,24 +28,28 @@ public:
     friend std::ostream& operator<<(std::ostream& o, TText& t);
 };
 
-class TTextIter {
+class TTextIter 
+{
 protected:
     TText& text;
     TTextNode* node;
     TStack<TTextNode*> st;
 public:
+    TTextIter() = default;
     TTextIter(TText& _text, TTextNode* _node, TStack<TTextNode*> _st);
     TTextIter(const TTextIter& t);
 
     bool GoNext(); 
     bool GoNextChar();
-    bool IsEnd(); //Првоерка конца
+    bool IsEnd();
 
     void ResetToString();
     void ResetToWord();
 
     TTextNode* Get();    
 };
+
+
 
 TTextIter::TTextIter(TText& _text, TTextNode* _node, TStack<TTextNode*> _st) : text(_text)
 {
@@ -132,7 +137,7 @@ bool TTextIter::GoNextChar()
   if (node->GetLevel() == 3 && node->GetNext() == nullptr)
   {
     if (st.IsEmpty())
-      throw logic_error("Error");
+      throw "Error";
 
     TTextNode* temp = st.Get();
 
@@ -146,8 +151,6 @@ bool TTextIter::GoNextChar()
   }
   return false;
 }
-
-
 
 bool TTextIter::IsEnd()
 {
@@ -163,7 +166,7 @@ bool TTextIter::IsEnd()
   if (node->GetLevel() == 3 && node->GetNext() == nullptr)
   {
     if (st.IsEmpty())
-      throw logic_error("Error");
+      throw "Error";
 
     TTextNode* prev = st.Get();
     if (prev->GetNext() != nullptr)
@@ -175,10 +178,11 @@ bool TTextIter::IsEnd()
 
 void TTextIter::ResetToString()
 {
-  while (node->GetLevel() > 1) {
+  while (node->GetLevel() > 1) 
+  {
     st.Get();
     if (st.IsEmpty())
-      throw logic_error("Error");
+      throw "Error";
     node = st.Get();
   }
 }
@@ -194,7 +198,8 @@ void TTextIter::ResetToWord()
     node = st.Get();
 }
 
-TTextNode* TTextIter::Get() {
+TTextNode* TTextIter::Get() 
+{
   return this->node;
 }
 
@@ -342,8 +347,6 @@ void TText::InsertData(char* c, TTextIter iter)
     node = new TTextNode(word, 2);
     iter.Get()->SetNext(node);
   }
-
-
 }
 
 void TText::InsertLine(char* c, TTextIter iter)
@@ -394,7 +397,7 @@ void TText::Delete(int count, TTextIter iter)
   }
 
   if (del < count)
-    throw logic_error("Error");
+    throw "Error";
 
   if (stack[0].IsEmpty() && stack[1].IsEmpty())
   {
@@ -473,7 +476,7 @@ void TText::Delete(int count, TTextIter iter)
 char* TText::Copy(int count, TTextIter iter)
 {
   if (count < 0)
-    throw logic_error("Error");
+    throw "Error";
 
   char* res = new char[count++];
 

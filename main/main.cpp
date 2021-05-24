@@ -6,14 +6,28 @@
 
 int main()
 {
-
-	char* temp = "Qwerty. \n Asd fgh zxc.\n";
+	/*char* temp = "Hello, \n World!\n";
 	TText A(temp);
-	TTextIter B = A.Find("y");
+	TTextIter B = A.Find("e");
 
-	A.InsertLine("lol", B);
+	A.InsertLine("Forza Ferrari!", B);
+	TTextIter C = A.Find("Ferrari");
 
-	cout << endl << A;
+	A.InsertLine("AND", C);
+
+	cout << A << endl;*/
+
+	char* const str = "Hello World";
+	TText E(str);
+
+	char tmp = 'W';
+	TTextIter iter = E.Find(tmp);
+
+	char* res = E.Copy(2, iter);
+	cout << res;
+	cout << *(E.Find('H').Get()); // получаем узел
+	cout << *(E.Find('W').Get());
+	cout << *(E.Find('r').Get());
+
 	return 0;
-
 }
